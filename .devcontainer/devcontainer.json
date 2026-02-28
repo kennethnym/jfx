@@ -1,0 +1,8 @@
+{
+	"name": "jrx",
+	"build": {
+		"context": ".",
+		"dockerfile": "Dockerfile"
+	},
+	"postCreateCommand": "bun install && cd example && bun install"
+}
