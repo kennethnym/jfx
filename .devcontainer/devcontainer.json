@@ -1,0 +1,14 @@
+{
+	"name": "jrx",
+	"build": {
+		"context": ".",
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "22"
+		},
+		"ghcr.io/nickvdyck/devcontainer-features/bun:1": {}
+	},
+	"postCreateCommand": "bun install && cd example && bun install"
+}
