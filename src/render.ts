@@ -1,12 +1,12 @@
 import type { Spec, UIElement } from "@json-render/core";
-import { FRAGMENT, type JfxNode, type RenderOptions, isJfxNode } from "./types";
+import { FRAGMENT, type JsonsxNode, type RenderOptions, isJsonsxNode } from "./types";
 
 /**
- * Flatten a JfxNode tree into a json-render `Spec`.
+ * Flatten a JsonsxNode tree into a json-render `Spec`.
  *
  * Analogous to `ReactDOM.render` but produces JSON instead of DOM mutations.
  *
- * @param node  - Root JfxNode (produced by JSX)
+ * @param node  - Root JsonsxNode (produced by JSX)
  * @param options - Optional render configuration (e.g. initial state)
  * @returns A json-render `Spec` ready for any renderer
  *
@@ -20,9 +20,9 @@ import { FRAGMENT, type JfxNode, type RenderOptions, isJfxNode } from "./types";
  * );
  * ```
  */
-export function render(node: JfxNode, options?: RenderOptions): Spec {
-  if (!isJfxNode(node)) {
-    throw new Error("render() expects a JfxNode produced by JSX.");
+export function render(node: JsonsxNode, options?: RenderOptions): Spec {
+  if (!isJsonsxNode(node)) {
+    throw new Error("render() expects a JsonsxNode produced by JSX.");
   }
 
   if (node.type === FRAGMENT) {
@@ -66,12 +66,12 @@ function generateKey(
 
 /**
  * Resolve the children of a node, expanding fragments inline.
- * Returns an array of concrete (non-fragment) JfxNodes.
+ * Returns an array of concrete (non-fragment) JsonsxNodes.
  */
-function expandChildren(children: JfxNode[]): JfxNode[] {
-  const result: JfxNode[] = [];
+function expandChildren(children: JsonsxNode[]): JsonsxNode[] {
+  const result: JsonsxNode[] = [];
   for (const child of children) {
-    if (!isJfxNode(child)) continue;
+    if (!isJsonsxNode(child)) continue;
     if (child.type === FRAGMENT) {
       // Recursively expand nested fragments
       result.push(...expandChildren(child.children));
@@ -83,11 +83,11 @@ function expandChildren(children: JfxNode[]): JfxNode[] {
 }
 
 /**
- * Recursively flatten a JfxNode into the elements map.
+ * Recursively flatten a JsonsxNode into the elements map.
  * Returns the key assigned to this node.
  */
 function flattenNode(
-  node: JfxNode,
+  node: JsonsxNode,
   elements: Record<string, UIElement>,
   counters: Map<string, number>,
   usedKeys: Set<string>,

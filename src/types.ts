@@ -4,19 +4,19 @@ import type {
 } from "@json-render/core";
 
 // ---------------------------------------------------------------------------
-// JfxNode — intermediate representation produced by the JSX factory
+// JsonsxNode — intermediate representation produced by the JSX factory
 // ---------------------------------------------------------------------------
 
 /**
- * Sentinel symbol identifying a JfxNode (prevents plain objects from
+ * Sentinel symbol identifying a JsonsxNode (prevents plain objects from
  * being mistaken for nodes).
  */
-export const JFX_NODE = Symbol.for("jfx.node");
+export const JSONSX_NODE = Symbol.for("jsonsx.node");
 
 /**
  * Sentinel symbol for Fragment grouping.
  */
-export const FRAGMENT = Symbol.for("jfx.fragment");
+export const FRAGMENT = Symbol.for("jsonsx.fragment");
 
 /**
  * A node in the intermediate JSX tree.
@@ -24,9 +24,9 @@ export const FRAGMENT = Symbol.for("jfx.fragment");
  * Created by the `jsx` / `jsxs` factory functions and consumed by `render()`
  * which flattens the tree into a json-render `Spec`.
  */
-export interface JfxNode {
-  /** Brand symbol — always `JFX_NODE` */
-  $$typeof: typeof JFX_NODE;
+export interface JsonsxNode {
+  /** Brand symbol — always `JSONSX_NODE` */
+  $$typeof: typeof JSONSX_NODE;
 
   /**
    * Component type name (e.g. `"Card"`, `"Button"`).
@@ -38,7 +38,7 @@ export interface JfxNode {
   props: Record<string, unknown>;
 
   /** Child nodes */
-  children: JfxNode[];
+  children: JsonsxNode[];
 
   // -- Reserved / meta fields (extracted from JSX props) --
 
@@ -59,20 +59,20 @@ export interface JfxNode {
 }
 
 // ---------------------------------------------------------------------------
-// JfxComponent — a function usable as a JSX tag that maps to a type string
+// JsonsxComponent — a function usable as a JSX tag that maps to a type string
 // ---------------------------------------------------------------------------
 
 /**
- * A jfx component function. Works like a React function component:
+ * A jsonsx component function. Works like a React function component:
  * when used as a JSX tag (`<Card />`), the factory calls the function
- * with props and gets back a JfxNode.
+ * with props and gets back a JsonsxNode.
  */
-export type JfxComponent = (props: Record<string, unknown>) => JfxNode;
+export type JsonsxComponent = (props: Record<string, unknown>) => JsonsxNode;
 
 /**
- * Define a jfx component for use as a JSX tag.
+ * Define a jsonsx component for use as a JSX tag.
  *
- * Creates a function that, when called with props, produces a JfxNode
+ * Creates a function that, when called with props, produces a JsonsxNode
  * with the given type name — just like a React component returns
  * React elements.
  *
@@ -82,12 +82,12 @@ export type JfxComponent = (props: Record<string, unknown>) => JfxNode;
  * const spec = render(<Card title="Hello"><Text content="World" /></Card>);
  * ```
  */
-export function component(typeName: string): JfxComponent {
+export function component(typeName: string): JsonsxComponent {
   // Import createNodeFromString lazily to avoid circular dep
   // (jsx-runtime imports types). Instead, we build the node inline.
   return (props: Record<string, unknown>) => {
     return {
-      $$typeof: JFX_NODE,
+      $$typeof: JSONSX_NODE,
       type: typeName,
       props: filterReserved(props),
       children: normalizeChildrenRaw(props.children),
@@ -110,21 +110,21 @@ function filterReserved(props: Record<string, unknown>): Record<string, unknown>
   return out;
 }
 
-function normalizeChildrenRaw(raw: unknown): JfxNode[] {
+function normalizeChildrenRaw(raw: unknown): JsonsxNode[] {
   if (raw == null || typeof raw === "boolean") return [];
   if (Array.isArray(raw)) {
-    const result: JfxNode[] = [];
+    const result: JsonsxNode[] = [];
     for (const child of raw) {
       if (child == null || typeof child === "boolean") continue;
       if (Array.isArray(child)) {
         result.push(...normalizeChildrenRaw(child));
       } else {
-        result.push(child as JfxNode);
+        result.push(child as JsonsxNode);
       }
     }
     return result;
   }
-  return [raw as JfxNode];
+  return [raw as JsonsxNode];
 }
 
 // ---------------------------------------------------------------------------
@@ -140,10 +140,10 @@ export interface RenderOptions {
 // Type guard
 // ---------------------------------------------------------------------------
 
-export function isJfxNode(value: unknown): value is JfxNode {
+export function isJsonsxNode(value: unknown): value is JsonsxNode {
   return (
     typeof value === "object" &&
     value !== null &&
-    (value as JfxNode).$$typeof === JFX_NODE
+    (value as JsonsxNode).$$typeof === JSONSX_NODE
   );
 }

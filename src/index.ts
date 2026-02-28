@@ -1,3 +1,3 @@
 export { render } from "./render";
-export { isJfxNode, JFX_NODE, FRAGMENT } from "./types";
-export type { JfxNode, JfxComponent, RenderOptions } from "./types";
+export { isJsonsxNode, JSONSX_NODE, FRAGMENT } from "./types";
+export type { JsonsxNode, JsonsxComponent, RenderOptions } from "./types";

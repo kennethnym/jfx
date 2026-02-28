@@ -1,11 +1,11 @@
 /** @jsxImportSource react */
 
 /**
- * Integration tests: verify that Specs produced by jfx are consumable
+ * Integration tests: verify that Specs produced by jsonsx are consumable
  * by @json-render/react's Renderer.
  *
  * This file uses React JSX (via the pragma above) for the React component
- * tree, and jfx's jsx()/jsxs() via the component wrappers for building Specs.
+ * tree, and jsonsx's jsx()/jsxs() via the component wrappers for building Specs.
  */
 
 import { describe, it, expect, mock } from "bun:test";
@@ -19,7 +19,7 @@ import {
 } from "@json-render/react";
 import { useStateStore } from "@json-render/react";
 import { jsx, jsxs } from "./jsx-runtime";
-import { render as jfxRender } from "./render";
+import { render as jsonsxRender } from "./render";
 import {
   Stack as JStack,
   Card as JCard,
@@ -64,7 +64,7 @@ function StateProbe() {
 const registry = { Button, Text, Stack, Card };
 
 // ---------------------------------------------------------------------------
-// Helper: render a jfx spec with @json-render/react
+// Helper: render a jsonsx spec with @json-render/react
 // ---------------------------------------------------------------------------
 
 function renderSpec(spec: Spec, handlers?: Record<string, (...args: unknown[]) => void>) {
@@ -80,15 +80,15 @@ function renderSpec(spec: Spec, handlers?: Record<string, (...args: unknown[]) =
 // Basic rendering
 // =============================================================================
 
-describe("jfx → @json-render/react round-trip", () => {
+describe("jsonsx → @json-render/react round-trip", () => {
   it("renders a single element", () => {
-    const spec = jfxRender(jsx(JText, { content: "Hello from jfx" }));
+    const spec = jsonsxRender(jsx(JText, { content: "Hello from jsonsx" }));
     renderSpec(spec);
-    expect(screen.getByTestId("text").textContent).toBe("Hello from jfx");
+    expect(screen.getByTestId("text").textContent).toBe("Hello from jsonsx");
   });
 
   it("renders nested elements with children", () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JCard, {
         title: "My Card",
         children: [jsx(JText, { content: "Inside card" })],
@@ -101,7 +101,7 @@ describe("jfx → @json-render/react round-trip", () => {
   });
 
   it("renders a tree with multiple children", () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JStack, {
         children: [
           jsx(JText, { content: "First" }),
@@ -116,7 +116,7 @@ describe("jfx → @json-render/react round-trip", () => {
   });
 
   it("renders a deep tree", () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JStack, {
         children: [
           jsxs(JCard, {
@@ -136,9 +136,9 @@ describe("jfx → @json-render/react round-trip", () => {
 // State + actions (adapted from chained-actions.test.tsx)
 // =============================================================================
 
-describe("jfx specs with state and actions", () => {
+describe("jsonsx specs with state and actions", () => {
   it("renders with initial state", () => {
-    const spec = jfxRender(jsx(JText, { content: "Stateful" }), {
+    const spec = jsonsxRender(jsx(JText, { content: "Stateful" }), {
       state: { count: 42 },
     });
     renderSpec(spec);
@@ -148,7 +148,7 @@ describe("jfx specs with state and actions", () => {
   });
 
   it("setState action updates state on button press", async () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsx(JButton, {
         label: "Set",
         on: {
@@ -172,7 +172,7 @@ describe("jfx specs with state and actions", () => {
   });
 
   it("chained pushState + setState resolves correctly", async () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsx(JButton, {
         label: "Chain",
         on: {
@@ -206,7 +206,7 @@ describe("jfx specs with state and actions", () => {
   });
 
   it("multiple pushState chain resolves correctly", async () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsx(JButton, {
         label: "Go",
         on: {
@@ -242,9 +242,9 @@ describe("jfx specs with state and actions", () => {
 // Spec structural validity
 // =============================================================================
 
-describe("jfx spec structural validity", () => {
+describe("jsonsx spec structural validity", () => {
   it("all child references resolve to existing elements", () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JStack, {
         children: [
           jsxs(JCard, {
@@ -272,12 +272,12 @@ describe("jfx spec structural validity", () => {
   });
 
   it("root element exists in elements map", () => {
-    const spec = jfxRender(jsx(JCard, { title: "Root" }));
+    const spec = jsonsxRender(jsx(JCard, { title: "Root" }));
     expect(spec.elements[spec.root]).toBeDefined();
   });
 
   it("element count matches node count", () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JStack, {
         children: [
           jsx(JCard, { title: "A" }),
@@ -294,9 +294,9 @@ describe("jfx spec structural validity", () => {
 // Dynamic features (ported from json-render's dynamic-forms.test.tsx)
 // =============================================================================
 
-describe("jfx specs with dynamic features", () => {
+describe("jsonsx specs with dynamic features", () => {
   it("$state prop expressions resolve at render time", () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsx(JText, { content: { $state: "/message" } }),
       { state: { message: "Dynamic hello" } },
     );
@@ -306,7 +306,7 @@ describe("jfx specs with dynamic features", () => {
   });
 
   it("visibility condition hides element when false", () => {
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JStack, {
         children: [
           jsx(JText, {
@@ -324,7 +324,7 @@ describe("jfx specs with dynamic features", () => {
 
   it("visibility condition shows element when true", () => {
     cleanup();
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JStack, {
         children: [
           jsx(JText, {
@@ -343,7 +343,7 @@ describe("jfx specs with dynamic features", () => {
   it("watchers fire when watched state changes", async () => {
     const loadCities = mock();
 
-    const spec = jfxRender(
+    const spec = jsonsxRender(
       jsxs(JStack, {
         children: [
           jsx(JButton, {

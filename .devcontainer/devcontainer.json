@@ -1,5 +1,5 @@
 {
-	"name": "jfx",
+	"name": "jsonsx",
 	"build": {
 		"context": ".",
 		"dockerfile": "Dockerfile"

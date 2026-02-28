@@ -1,5 +1,5 @@
 {
-  "name": "jfx-example",
+  "name": "jsonsx-example",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
   "dependencies": {
     "@json-render/core": "0.10.0",
     "@json-render/react": "0.10.0",
-    "jfx": "file:..",
+    "jsonsx": "file:..",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "shiki": "^4.0.0"

@@ -3,11 +3,11 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "jfx-example",
+      "name": "jsonsx-example",
       "dependencies": {
         "@json-render/core": "0.10.0",
         "@json-render/react": "0.10.0",
-        "jfx": "file:..",
+        "jsonsx": "file:..",
         "react": "19.2.4",
         "react-dom": "19.2.4",
         "shiki": "^4.0.0",
@@ -241,11 +241,11 @@
 
     "html-void-elements": ["html-void-elements@3.0.0", "", {}, "sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg=="],
 
-    "jfx": ["jfx@file:..", { "devDependencies": { "@json-render/core": "0.10.0", "@json-render/react": "0.10.0", "@testing-library/react": "16.3.2", "@types/bun": "^1.3.9", "@types/react": "19.2.3", "happy-dom": "18.0.1", "react": "19.2.4", "react-dom": "19.2.4", "tsup": "8.5.1", "typescript": "5.9.3" }, "peerDependencies": { "@json-render/core": ">=0.10.0" } }],
-
     "joycon": ["joycon@3.1.1", "", {}, "sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw=="],
 
     "js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
+
+    "jsonsx": ["jsonsx@file:..", { "devDependencies": { "@json-render/core": "0.10.0", "@json-render/react": "0.10.0", "@testing-library/react": "16.3.2", "@types/bun": "^1.3.9", "@types/react": "19.2.3", "happy-dom": "18.0.1", "react": "19.2.4", "react-dom": "19.2.4", "tsup": "8.5.1", "typescript": "5.9.3" }, "peerDependencies": { "@json-render/core": ">=0.10.0" } }],
 
     "lilconfig": ["lilconfig@3.1.3", "", {}, "sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw=="],
 
@@ -369,6 +369,6 @@
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
-    "jfx/@types/react": ["@types/react@19.2.3", "", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-k5dJVszUiNr1DSe8Cs+knKR6IrqhqdhpUwzqhkS8ecQTSf3THNtbfIp/umqHMpX2bv+9dkx3fwDv/86LcSfvSg=="],
+    "jsonsx/@types/react": ["@types/react@19.2.3", "", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-k5dJVszUiNr1DSe8Cs+knKR6IrqhqdhpUwzqhkS8ecQTSf3THNtbfIp/umqHMpX2bv+9dkx3fwDv/86LcSfvSg=="],
   }
 }

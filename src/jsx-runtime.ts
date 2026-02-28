@@ -2,12 +2,12 @@ import type {
   ActionBinding,
   VisibilityCondition,
 } from "@json-render/core";
-import { JFX_NODE, FRAGMENT, type JfxNode } from "./types";
-import type { JfxComponent } from "./types";
+import { JSONSX_NODE, FRAGMENT, type JsonsxNode } from "./types";
+import type { JsonsxComponent } from "./types";
 
 export { FRAGMENT as Fragment };
 
-/** Props reserved by jfx — extracted from JSX props and placed on the UIElement level. */
+/** Props reserved by jsonsx — extracted from JSX props and placed on the UIElement level. */
 const RESERVED_PROPS = new Set([
   "key",
   "children",
@@ -18,26 +18,26 @@ const RESERVED_PROPS = new Set([
 ]);
 
 /**
- * Normalize a raw `children` value from JSX props into a flat array of JfxNodes.
+ * Normalize a raw `children` value from JSX props into a flat array of JsonsxNodes.
  * Handles: undefined, single node, nested arrays, and filters out nulls/booleans.
  */
-function normalizeChildren(raw: unknown): JfxNode[] {
+function normalizeChildren(raw: unknown): JsonsxNode[] {
   if (raw == null || typeof raw === "boolean") return [];
 
   if (Array.isArray(raw)) {
-    const result: JfxNode[] = [];
+    const result: JsonsxNode[] = [];
     for (const child of raw) {
       if (child == null || typeof child === "boolean") continue;
       if (Array.isArray(child)) {
         result.push(...normalizeChildren(child));
       } else {
-        result.push(child as JfxNode);
+        result.push(child as JsonsxNode);
       }
     }
     return result;
   }
 
-  return [raw as JfxNode];
+  return [raw as JsonsxNode];
 }
 
 /**
@@ -56,20 +56,20 @@ function extractProps(
 }
 
 /** Accepted tag types: string literal, Fragment symbol, or a function component. */
-type JsxType = string | typeof FRAGMENT | JfxComponent;
+type JsxType = string | typeof FRAGMENT | JsonsxComponent;
 
 /**
  * Core factory — shared by `jsx` and `jsxs`.
  *
  * If `type` is a function, it is called with props (like React calls
- * function components). The function returns a JfxNode directly.
+ * function components). The function returns a JsonsxNode directly.
  *
- * If `type` is a string or Fragment, a JfxNode is constructed inline.
+ * If `type` is a string or Fragment, a JsonsxNode is constructed inline.
  */
 function createNode(
   type: JsxType,
   rawProps: Record<string, unknown> | null,
-): JfxNode {
+): JsonsxNode {
   const p = rawProps ?? {};
 
   // Function component — call it, just like React does.
@@ -78,7 +78,7 @@ function createNode(
   }
 
   return {
-    $$typeof: JFX_NODE,
+    $$typeof: JSONSX_NODE,
     type,
     props: extractProps(p),
     children: normalizeChildren(p.children),
@@ -102,7 +102,7 @@ export function jsx(
   type: JsxType,
   props: Record<string, unknown> | null,
   key?: string,
-): JfxNode {
+): JsonsxNode {
   const node = createNode(type, props);
   if (key != null) node.key = String(key);
   return node;
@@ -116,7 +116,7 @@ export function jsxs(
   type: JsxType,
   props: Record<string, unknown> | null,
   key?: string,
-): JfxNode {
+): JsonsxNode {
   const node = createNode(type, props);
   if (key != null) node.key = String(key);
   return node;
@@ -133,7 +133,7 @@ export namespace JSX {
   }
 
   /** The type returned by JSX expressions. */
-  export type Element = JfxNode;
+  export type Element = JsonsxNode;
 
   export interface ElementChildrenAttribute {
     children: {};

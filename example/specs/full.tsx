@@ -1,5 +1,5 @@
-/** @jsxImportSource jfx */
-import { render } from "jfx";
+/** @jsxImportSource jsonsx */
+import { render } from "jsonsx";
 import { Stack, Card, Text, Button, Input } from "../components";
 
 export const fullSpec = render(

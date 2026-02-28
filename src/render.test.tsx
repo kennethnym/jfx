@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { render } from "./render";
-import { FRAGMENT, type JfxNode } from "./types";
+import { FRAGMENT, type JsonsxNode } from "./types";
 import { jsx } from "./jsx-runtime";
 import {
   Stack,
@@ -300,7 +300,7 @@ describe("state passthrough", () => {
 // =============================================================================
 
 describe("error handling", () => {
-  it("throws for non-JfxNode input", () => {
-    expect(() => render({} as JfxNode)).toThrow(/expects a JfxNode/);
+  it("throws for non-JsonsxNode input", () => {
+    expect(() => render({} as JsonsxNode)).toThrow(/expects a JsonsxNode/);
   });
 });
