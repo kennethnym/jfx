@@ -1,0 +1,23 @@
+{
+  "name": "jrx-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot src/server.ts",
+    "build": "bun build ./src/index.html --outdir=dist --sourcemap --target=browser --minify",
+    "start": "NODE_ENV=production bun src/server.ts"
+  },
+  "dependencies": {
+    "jrx": "file:..",
+    "@json-render/core": "0.10.0",
+    "@json-render/react": "0.10.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "5.9.3"
+  }
+}
