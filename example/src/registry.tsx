@@ -61,7 +61,7 @@ export const { registry, handlers } = defineRegistry(catalog, {
     ),
 
     Input: ({ props, bindings }) => {
-      const [value, setValue] = useBoundProp<string>(props.value, bindings?.value);
+      const [value, setValue] = useBoundProp<string>(props.value ?? undefined, bindings?.value);
       return (
         <input
           placeholder={props.placeholder ?? ""}
