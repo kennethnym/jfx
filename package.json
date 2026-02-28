@@ -1,5 +1,5 @@
 {
-  "name": "jrx",
+  "name": "jfx",
   "version": "0.1.0",
   "license": "MIT",
   "description": "JSX factory for json-render. Write JSX, get Spec JSON.",

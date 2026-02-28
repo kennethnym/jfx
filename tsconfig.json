@@ -14,11 +14,11 @@
     "outDir": "dist",
     "rootDir": "src",
     "jsx": "react-jsx",
-    "jsxImportSource": "jrx",
+    "jsxImportSource": "jfx",
     "baseUrl": ".",
     "paths": {
-      "jrx/jsx-runtime": ["./src/jsx-runtime"],
-      "jrx/jsx-dev-runtime": ["./src/jsx-dev-runtime"]
+      "jfx/jsx-runtime": ["./src/jsx-runtime"],
+      "jfx/jsx-dev-runtime": ["./src/jsx-dev-runtime"]
     }
   },
   "include": ["src"]

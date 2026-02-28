@@ -1,5 +1,5 @@
 {
-	"name": "jrx",
+	"name": "jfx",
 	"build": {
 		"context": ".",
 		"dockerfile": "Dockerfile"

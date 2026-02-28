@@ -1,7 +1,7 @@
 /**
  * Ported from json-render's core/src/spec-validator.test.ts.
  *
- * Runs @json-render/core's validateSpec against Specs produced by jrx
+ * Runs @json-render/core's validateSpec against Specs produced by jfx
  * to prove structural correctness.
  */
 
@@ -19,7 +19,7 @@ import {
   Select,
 } from "./test-components";
 
-describe("validateSpec on jrx-produced specs", () => {
+describe("validateSpec on jfx-produced specs", () => {
   it("validates a simple single-element spec", () => {
     const spec = render(<Text text="hello" />);
     const result = validateSpec(spec);
@@ -90,7 +90,7 @@ describe("validateSpec on jrx-produced specs", () => {
     expect(result.issues.some((i) => i.code === "watch_in_props")).toBe(false);
   });
 
-  it("no orphaned elements in jrx output", () => {
+  it("no orphaned elements in jfx output", () => {
     const spec = render(
       <Stack>
         <Text text="A" />
@@ -101,7 +101,7 @@ describe("validateSpec on jrx-produced specs", () => {
     expect(result.issues.some((i) => i.code === "orphaned_element")).toBe(false);
   });
 
-  it("no missing children in jrx output", () => {
+  it("no missing children in jfx output", () => {
     const spec = render(
       <Stack>
         <Card title="X">

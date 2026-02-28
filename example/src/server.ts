@@ -46,4 +46,4 @@ const server = serve({
   },
 });
 
-console.log(`jrx example server running at ${server.url}`);
+console.log(`jfx example server running at ${server.url}`);
