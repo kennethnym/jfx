@@ -4,8 +4,5 @@
 		"context": ".",
 		"dockerfile": "Dockerfile"
 	},
-	"features": {
-		"ghcr.io/nickvdyck/devcontainer-features/bun:1": {}
-	},
 	"postCreateCommand": "bun install && cd example && bun install"
 }
