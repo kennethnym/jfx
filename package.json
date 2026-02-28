@@ -7,32 +7,27 @@
   },
   "description": "JSX factory for json-render. Write JSX, get Spec JSON.",
   "type": "module",
-  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     },
     "./jsx-runtime": {
       "types": "./dist/jsx-runtime.d.ts",
-      "import": "./dist/jsx-runtime.js",
-      "require": "./dist/jsx-runtime.cjs"
+      "import": "./dist/jsx-runtime.js"
     },
     "./jsx-dev-runtime": {
       "types": "./dist/jsx-dev-runtime.d.ts",
-      "import": "./dist/jsx-dev-runtime.js",
-      "require": "./dist/jsx-dev-runtime.cjs"
+      "import": "./dist/jsx-dev-runtime.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "rm -rf dist && bun build src/index.ts src/jsx-runtime.ts src/jsx-dev-runtime.ts --outdir=dist --target=node --format=esm && tsc -p tsconfig.build.json",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
@@ -48,7 +43,7 @@
     "happy-dom": "18.0.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "tsup": "8.5.1",
+
     "typescript": "5.9.3"
   }
 }
