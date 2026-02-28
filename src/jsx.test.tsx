@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { render } from "./render";
-import { isJsonsxNode, FRAGMENT } from "./types";
+import { isJrxNode, FRAGMENT } from "./types";
 import { jsx, jsxs, Fragment } from "./jsx-runtime";
 import {
   Stack,
@@ -18,25 +18,25 @@ import {
 // =============================================================================
 
 describe("jsx factory", () => {
-  it("jsx() with string type returns a JsonsxNode", () => {
+  it("jsx() with string type returns a JrxNode", () => {
     const node = jsx("Card", { title: "Hello" });
-    expect(isJsonsxNode(node)).toBe(true);
+    expect(isJrxNode(node)).toBe(true);
     expect(node.type).toBe("Card");
     expect(node.props).toEqual({ title: "Hello" });
   });
 
   it("jsx() with component function resolves typeName", () => {
     const node = jsx(Card, { title: "Hello" });
-    expect(isJsonsxNode(node)).toBe(true);
+    expect(isJrxNode(node)).toBe(true);
     expect(node.type).toBe("Card");
     expect(node.props).toEqual({ title: "Hello" });
   });
 
-  it("jsxs() returns a JsonsxNode with children", () => {
+  it("jsxs() returns a JrxNode with children", () => {
     const node = jsxs(Stack, {
       children: [jsx(Text, { content: "A" }), jsx(Text, { content: "B" })],
     });
-    expect(isJsonsxNode(node)).toBe(true);
+    expect(isJrxNode(node)).toBe(true);
     expect(node.children).toHaveLength(2);
   });
 
@@ -73,7 +73,7 @@ describe("jsx factory", () => {
 
   it("jsx() handles null props", () => {
     const node = jsx("Divider", null);
-    expect(isJsonsxNode(node)).toBe(true);
+    expect(isJrxNode(node)).toBe(true);
     expect(node.props).toEqual({});
     expect(node.children).toEqual([]);
   });

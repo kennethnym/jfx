@@ -1,22 +1,22 @@
-# jsonsx
+# @nym.sh/jrx
 
 JSX factory for [json-render](https://github.com/vercel-labs/json-render). Write JSX, get Spec JSON.
 
 ## Install
 
 ```bash
-bun add jsonsx @json-render/core
+bun add @nym.sh/jrx @json-render/core
 ```
 
 ## Setup
 
-Configure your `tsconfig.json` to use jsonsx as the JSX source:
+Configure your `tsconfig.json` to use @nym.sh/jrx as the JSX source:
 
 ```json
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "jsonsx"
+    "jsxImportSource": "@nym.sh/jrx"
   }
 }
 ```
@@ -24,7 +24,7 @@ Configure your `tsconfig.json` to use jsonsx as the JSX source:
 Or use a per-file pragma:
 
 ```tsx
-/** @jsxImportSource jsonsx */
+/** @jsxImportSource @nym.sh/jrx */
 ```
 
 ## Usage
@@ -34,18 +34,18 @@ Or use a per-file pragma:
 Create wrapper functions that map JSX tags to json-render component type names:
 
 ```ts
-import { jsx } from "jsonsx/jsx-runtime";
-import type { JsonsxNode } from "jsonsx";
+import { jsx } from "@nym.sh/jrx/jsx-runtime";
+import type { JrxNode } from "@nym.sh/jrx";
 
-export function Stack(props: Record<string, unknown>): JsonsxNode {
+export function Stack(props: Record<string, unknown>): JrxNode {
   return jsx("Stack", props);
 }
 
-export function Text(props: Record<string, unknown>): JsonsxNode {
+export function Text(props: Record<string, unknown>): JrxNode {
   return jsx("Text", props);
 }
 
-export function Button(props: Record<string, unknown>): JsonsxNode {
+export function Button(props: Record<string, unknown>): JrxNode {
   return jsx("Button", props);
 }
 ```
@@ -53,12 +53,12 @@ export function Button(props: Record<string, unknown>): JsonsxNode {
 ### Render JSX to Spec JSON
 
 ```tsx
-import { render } from "jsonsx";
+import { render } from "@nym.sh/jrx";
 import { Stack, Text, Button } from "./components";
 
 const spec = render(
   <Stack>
-    <Text content="Hello from jsonsx!" />
+    <Text content="Hello from jrx!" />
     <Button label="Click me" />
   </Stack>
 );
@@ -72,7 +72,7 @@ This produces:
   "elements": {
     "text-1": {
       "type": "Text",
-      "props": { "content": "Hello from jsonsx!" }
+      "props": { "content": "Hello from jrx!" }
     },
     "button-1": {
       "type": "Button",
@@ -135,7 +135,7 @@ These props are extracted from JSX and mapped to Spec fields rather than passed 
 
 ## Example
 
-The `example/` directory contains a Bun HTTP server that demonstrates jsonsx in action. It shows JSX source, live rendered UI (via `@json-render/react`), and JSON output side by side.
+The `example/` directory contains a Bun HTTP server that demonstrates jrx in action. It shows JSX source, live rendered UI (via `@json-render/react`), and JSON output side by side.
 
 ```bash
 cd example

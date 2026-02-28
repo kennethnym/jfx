@@ -1,5 +1,5 @@
-/** @jsxImportSource jsonsx */
-import { render } from "jsonsx";
+/** @jsxImportSource @nym.sh/jrx */
+import { render } from "@nym.sh/jrx";
 import { Stack, Card, Text, Button, Input } from "../components";
 
 export const fullSpec = render(

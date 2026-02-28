@@ -1,5 +1,5 @@
 {
-	"name": "jsonsx",
+	"name": "@nym.sh/jrx",
 	"build": {
 		"context": ".",
 		"dockerfile": "Dockerfile"

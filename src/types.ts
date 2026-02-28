@@ -4,19 +4,19 @@ import type {
 } from "@json-render/core";
 
 // ---------------------------------------------------------------------------
-// JsonsxNode — intermediate representation produced by the JSX factory
+// JrxNode — intermediate representation produced by the JSX factory
 // ---------------------------------------------------------------------------
 
 /**
- * Sentinel symbol identifying a JsonsxNode (prevents plain objects from
+ * Sentinel symbol identifying a JrxNode (prevents plain objects from
  * being mistaken for nodes).
  */
-export const JSONSX_NODE = Symbol.for("jsonsx.node");
+export const JRX_NODE = Symbol.for("jrx.node");
 
 /**
  * Sentinel symbol for Fragment grouping.
  */
-export const FRAGMENT = Symbol.for("jsonsx.fragment");
+export const FRAGMENT = Symbol.for("jrx.fragment");
 
 /**
  * A node in the intermediate JSX tree.
@@ -24,9 +24,9 @@ export const FRAGMENT = Symbol.for("jsonsx.fragment");
  * Created by the `jsx` / `jsxs` factory functions and consumed by `render()`
  * which flattens the tree into a json-render `Spec`.
  */
-export interface JsonsxNode {
-  /** Brand symbol — always `JSONSX_NODE` */
-  $$typeof: typeof JSONSX_NODE;
+export interface JrxNode {
+  /** Brand symbol — always `JRX_NODE` */
+  $$typeof: typeof JRX_NODE;
 
   /**
    * Component type name (e.g. `"Card"`, `"Button"`).
@@ -38,7 +38,7 @@ export interface JsonsxNode {
   props: Record<string, unknown>;
 
   /** Child nodes */
-  children: JsonsxNode[];
+  children: JrxNode[];
 
   // -- Reserved / meta fields (extracted from JSX props) --
 
@@ -59,20 +59,20 @@ export interface JsonsxNode {
 }
 
 // ---------------------------------------------------------------------------
-// JsonsxComponent — a function usable as a JSX tag that maps to a type string
+// JrxComponent — a function usable as a JSX tag that maps to a type string
 // ---------------------------------------------------------------------------
 
 /**
- * A jsonsx component function. Works like a React function component:
+ * A jrx component function. Works like a React function component:
  * when used as a JSX tag (`<Card />`), the factory calls the function
- * with props and gets back a JsonsxNode.
+ * with props and gets back a JrxNode.
  */
-export type JsonsxComponent = (props: Record<string, unknown>) => JsonsxNode;
+export type JrxComponent = (props: Record<string, unknown>) => JrxNode;
 
 /**
- * Define a jsonsx component for use as a JSX tag.
+ * Define a jrx component for use as a JSX tag.
  *
- * Creates a function that, when called with props, produces a JsonsxNode
+ * Creates a function that, when called with props, produces a JrxNode
  * with the given type name — just like a React component returns
  * React elements.
  *
@@ -82,12 +82,12 @@ export type JsonsxComponent = (props: Record<string, unknown>) => JsonsxNode;
  * const spec = render(<Card title="Hello"><Text content="World" /></Card>);
  * ```
  */
-export function component(typeName: string): JsonsxComponent {
+export function component(typeName: string): JrxComponent {
   // Import createNodeFromString lazily to avoid circular dep
   // (jsx-runtime imports types). Instead, we build the node inline.
   return (props: Record<string, unknown>) => {
     return {
-      $$typeof: JSONSX_NODE,
+      $$typeof: JRX_NODE,
       type: typeName,
       props: filterReserved(props),
       children: normalizeChildrenRaw(props.children),
@@ -110,21 +110,21 @@ function filterReserved(props: Record<string, unknown>): Record<string, unknown>
   return out;
 }
 
-function normalizeChildrenRaw(raw: unknown): JsonsxNode[] {
+function normalizeChildrenRaw(raw: unknown): JrxNode[] {
   if (raw == null || typeof raw === "boolean") return [];
   if (Array.isArray(raw)) {
-    const result: JsonsxNode[] = [];
+    const result: JrxNode[] = [];
     for (const child of raw) {
       if (child == null || typeof child === "boolean") continue;
       if (Array.isArray(child)) {
         result.push(...normalizeChildrenRaw(child));
       } else {
-        result.push(child as JsonsxNode);
+        result.push(child as JrxNode);
       }
     }
     return result;
   }
-  return [raw as JsonsxNode];
+  return [raw as JrxNode];
 }
 
 // ---------------------------------------------------------------------------
@@ -140,10 +140,10 @@ export interface RenderOptions {
 // Type guard
 // ---------------------------------------------------------------------------
 
-export function isJsonsxNode(value: unknown): value is JsonsxNode {
+export function isJrxNode(value: unknown): value is JrxNode {
   return (
     typeof value === "object" &&
     value !== null &&
-    (value as JsonsxNode).$$typeof === JSONSX_NODE
+    (value as JrxNode).$$typeof === JRX_NODE
   );
 }

@@ -14,11 +14,11 @@
     "outDir": "dist",
     "rootDir": "src",
     "jsx": "react-jsx",
-    "jsxImportSource": "jsonsx",
+    "jsxImportSource": "@nym.sh/jrx",
     "baseUrl": ".",
     "paths": {
-      "jsonsx/jsx-runtime": ["./src/jsx-runtime"],
-      "jsonsx/jsx-dev-runtime": ["./src/jsx-dev-runtime"]
+      "@nym.sh/jrx/jsx-runtime": ["./src/jsx-runtime"],
+      "@nym.sh/jrx/jsx-dev-runtime": ["./src/jsx-dev-runtime"]
     }
   },
   "include": ["src"]

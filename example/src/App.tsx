@@ -75,7 +75,7 @@ export function App() {
   if (!activeSpec) {
     return (
       <div style={{ maxWidth: 600, margin: "60px auto", padding: "0 24px" }}>
-        <h1 style={{ fontSize: "24px", marginBottom: "8px" }}>jsonsx examples</h1>
+        <h1 style={{ fontSize: "24px", marginBottom: "8px" }}>jrx examples</h1>
         <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "24px" }}>
           JSX &rarr; json-render Spec. Pick a spec to see the live UI and JSON
           output.

@@ -3,11 +3,11 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "jsonsx-example",
+      "name": "jrx-example",
       "dependencies": {
         "@json-render/core": "0.10.0",
         "@json-render/react": "0.10.0",
-        "jsonsx": "file:..",
+        "@nym.sh/jrx": "file:..",
         "react": "19.2.4",
         "react-dom": "19.2.4",
         "shiki": "^4.0.0",
@@ -90,6 +90,8 @@
     "@json-render/core": ["@json-render/core@0.10.0", "", { "dependencies": { "zod": "^4.0.0" } }, "sha512-aqV9vwpBMIH7J/3d0szxfAwB6Wa2t1U3g9DkiFaFAYlvAotnpGiR+XeOYVK6CxeIJsq0RK7BaUKOa0arWEGNWg=="],
 
     "@json-render/react": ["@json-render/react@0.10.0", "", { "dependencies": { "@json-render/core": "0.10.0" }, "peerDependencies": { "react": "^19.2.3" } }, "sha512-gyl3YiZ8CZZauAxvUtL1cYkO2mWnKkWmJEC9naqzxIjJp5oHg5v/4F+4zEx4xH5AeGAcY+g2/C7X9Kz8rWMRFg=="],
+
+    "@nym.sh/jrx": ["@nym.sh/jrx@file:..", { "devDependencies": { "@json-render/core": "0.10.0", "@json-render/react": "0.10.0", "@testing-library/react": "16.3.2", "@types/bun": "^1.3.9", "@types/react": "19.2.3", "happy-dom": "18.0.1", "react": "19.2.4", "react-dom": "19.2.4", "tsup": "8.5.1", "typescript": "5.9.3" }, "peerDependencies": { "@json-render/core": ">=0.10.0" } }],
 
     "@rollup/rollup-android-arm-eabi": ["@rollup/rollup-android-arm-eabi@4.59.0", "", { "os": "android", "cpu": "arm" }, "sha512-upnNBkA6ZH2VKGcBj9Fyl9IGNPULcjXRlg0LLeaioQWueH30p6IXtJEbKAgvyv+mJaMxSm1l6xwDXYjpEMiLMg=="],
 
@@ -245,8 +247,6 @@
 
     "js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
 
-    "jsonsx": ["jsonsx@file:..", { "devDependencies": { "@json-render/core": "0.10.0", "@json-render/react": "0.10.0", "@testing-library/react": "16.3.2", "@types/bun": "^1.3.9", "@types/react": "19.2.3", "happy-dom": "18.0.1", "react": "19.2.4", "react-dom": "19.2.4", "tsup": "8.5.1", "typescript": "5.9.3" }, "peerDependencies": { "@json-render/core": ">=0.10.0" } }],
-
     "lilconfig": ["lilconfig@3.1.3", "", {}, "sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw=="],
 
     "lines-and-columns": ["lines-and-columns@1.2.4", "", {}, "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg=="],
@@ -369,6 +369,6 @@
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
-    "jsonsx/@types/react": ["@types/react@19.2.3", "", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-k5dJVszUiNr1DSe8Cs+knKR6IrqhqdhpUwzqhkS8ecQTSf3THNtbfIp/umqHMpX2bv+9dkx3fwDv/86LcSfvSg=="],
+    "@nym.sh/jrx/@types/react": ["@types/react@19.2.3", "", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-k5dJVszUiNr1DSe8Cs+knKR6IrqhqdhpUwzqhkS8ecQTSf3THNtbfIp/umqHMpX2bv+9dkx3fwDv/86LcSfvSg=="],
   }
 }
