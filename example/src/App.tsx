@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { Renderer, StateProvider, ActionProvider, VisibilityProvider } from "@json-render/react";
 import type { Spec } from "@json-render/core";
 import { registry, handlers } from "./registry";
+import { useHighlight } from "./useHighlight";
 
 const SPECS = ["simple", "full"] as const;
 
@@ -30,12 +31,31 @@ function SpecRenderer({ spec }: { spec: Spec }) {
   );
 }
 
+function CodeBlock({ html, fallback, maxHeight = "40vh" }: { html: string; fallback: string; maxHeight?: string }) {
+  if (html) {
+    return (
+      <div
+        dangerouslySetInnerHTML={{ __html: html }}
+        style={{ borderRadius: "8px", overflow: "auto", maxHeight, fontSize: "13px", lineHeight: "1.5" }}
+      />
+    );
+  }
+  return (
+    <pre style={{ backgroundColor: "var(--code-bg)", color: "var(--code-fg)", padding: "16px", borderRadius: "8px", fontSize: "13px", lineHeight: "1.5", overflow: "auto", maxHeight, margin: 0 }}>
+      {fallback}
+    </pre>
+  );
+}
+
 export function App() {
   const [activeSpec, setActiveSpec] = useState<string | null>(null);
   const [spec, setSpec] = useState<Spec | null>(null);
   const [specJson, setSpecJson] = useState<string>("");
   const [jsxSource, setJsxSource] = useState<string>("");
   const [loading, setLoading] = useState(false);
+
+  const jsxHtml = useHighlight(jsxSource, "tsx");
+  const jsonHtml = useHighlight(specJson, "json");
 
   useEffect(() => {
     if (!activeSpec) return;
@@ -56,7 +76,7 @@ export function App() {
     return (
       <div style={{ maxWidth: 600, margin: "60px auto", padding: "0 24px" }}>
         <h1 style={{ fontSize: "24px", marginBottom: "8px" }}>jrx examples</h1>
-        <p style={{ color: "#666", fontSize: "14px", marginBottom: "24px" }}>
+        <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginBottom: "24px" }}>
           JSX &rarr; json-render Spec. Pick a spec to see the live UI and JSON
           output.
         </p>
@@ -68,15 +88,16 @@ export function App() {
               style={{
                 padding: "12px 16px",
                 fontSize: "15px",
-                backgroundColor: "#fff",
-                border: "1px solid #d0d0d0",
+                backgroundColor: "var(--bg-surface)",
+                color: "var(--text)",
+                border: "1px solid var(--border)",
                 borderRadius: "8px",
                 cursor: "pointer",
                 textAlign: "left",
               }}
             >
               <strong>{name}</strong>
-              <span style={{ color: "#888", marginLeft: "8px" }}>
+              <span style={{ color: "var(--text-muted)", marginLeft: "8px" }}>
                 {name === "simple"
                   ? "Flat elements, no state"
                   : "Nested layout with state, events, visibility, watchers"}
@@ -93,8 +114,8 @@ export function App() {
       <div
         style={{
           padding: "12px 24px",
-          borderBottom: "1px solid #e0e0e0",
-          backgroundColor: "#fff",
+          borderBottom: "1px solid var(--border-light)",
+          backgroundColor: "var(--bg-surface)",
           display: "flex",
           alignItems: "center",
           gap: "16px",
@@ -108,7 +129,7 @@ export function App() {
           style={{
             background: "none",
             border: "none",
-            color: "#4f46e5",
+            color: "var(--accent)",
             cursor: "pointer",
             fontSize: "14px",
           }}
@@ -119,69 +140,39 @@ export function App() {
       </div>
 
       {loading ? (
-        <p style={{ padding: "24px", color: "#888" }}>Loading...</p>
+        <p style={{ padding: "24px", color: "var(--text-muted)" }}>Loading...</p>
       ) : (
         spec && (
-          <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "24px" }}>
-            {/* JSX Source */}
-            <div>
-              <h2 style={{ margin: "0 0 12px 0", fontSize: "16px", color: "#111" }}>
-                JSX Source
+          <div style={{ display: "flex", gap: "24px", padding: "24px", alignItems: "flex-start" }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h2 style={{ margin: "0 0 12px 0", fontSize: "16px" }}>
+                Live UI
               </h2>
-              <pre
+              <div
                 style={{
-                  backgroundColor: "#1e1e2e",
-                  color: "#cdd6f4",
-                  padding: "16px",
+                  border: "1px solid var(--border-light)",
                   borderRadius: "8px",
-                  fontSize: "13px",
-                  lineHeight: "1.5",
-                  overflow: "auto",
-                  maxHeight: "40vh",
-                  margin: 0,
+                  padding: "16px",
+                  backgroundColor: "var(--bg-surface)",
                 }}
               >
-                {jsxSource}
-              </pre>
+                <SpecRenderer spec={spec} />
+              </div>
             </div>
 
-            {/* Live UI + JSON side by side */}
-            <div style={{ display: "flex", gap: "24px", alignItems: "flex-start" }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h2 style={{ margin: "0 0 12px 0", fontSize: "16px", color: "#111" }}>
-                  Live UI
+            <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "24px" }}>
+              <div>
+                <h2 style={{ margin: "0 0 12px 0", fontSize: "16px" }}>
+                  JSX Source
                 </h2>
-                <div
-                  style={{
-                    border: "1px solid #e0e0e0",
-                    borderRadius: "8px",
-                    padding: "16px",
-                    backgroundColor: "#fff",
-                  }}
-                >
-                  <SpecRenderer spec={spec} />
-                </div>
+                <CodeBlock html={jsxHtml} fallback={jsxSource} />
               </div>
 
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h2 style={{ margin: "0 0 12px 0", fontSize: "16px", color: "#111" }}>
+              <div>
+                <h2 style={{ margin: "0 0 12px 0", fontSize: "16px" }}>
                   JSON Output
                 </h2>
-                <pre
-                  style={{
-                    backgroundColor: "#1e1e2e",
-                    color: "#cdd6f4",
-                    padding: "16px",
-                    borderRadius: "8px",
-                    fontSize: "13px",
-                    lineHeight: "1.5",
-                    overflow: "auto",
-                    maxHeight: "80vh",
-                    margin: 0,
-                  }}
-                >
-                  {specJson}
-                </pre>
+                <CodeBlock html={jsonHtml} fallback={specJson} />
               </div>
             </div>
           </div>

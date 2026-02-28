@@ -47,12 +47,7 @@ export const fullSpec = render(
     <Card title="Watched Input">
       <Input
         placeholder="Type a country..."
-        on={{
-          change: {
-            action: "setState",
-            params: { statePath: "/country", value: { $event: "/value" } },
-          },
-        }}
+        value={{ $bindState: "/country" }}
       />
       <Text
         content={{ $state: "/country" }}

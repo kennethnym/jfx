@@ -1,4 +1,4 @@
-import { defineRegistry } from "@json-render/react";
+import { defineRegistry, useBoundProp } from "@json-render/react";
 import { catalog } from "./catalog";
 
 export const { registry, handlers } = defineRegistry(catalog, {
@@ -19,14 +19,14 @@ export const { registry, handlers } = defineRegistry(catalog, {
     Card: ({ props, children }) => (
       <div
         style={{
-          border: "1px solid #d0d0d0",
+          border: "1px solid var(--border)",
           borderRadius: "8px",
           padding: "16px",
-          backgroundColor: "#fafafa",
+          backgroundColor: "var(--bg-surface-alt)",
         }}
       >
         {props.title && (
-          <h3 style={{ margin: "0 0 12px 0", fontSize: "16px", color: "#333" }}>
+          <h3 style={{ margin: "0 0 12px 0", fontSize: "16px" }}>
             {props.title}
           </h3>
         )}
@@ -37,7 +37,7 @@ export const { registry, handlers } = defineRegistry(catalog, {
     ),
 
     Text: ({ props }) => (
-      <span style={{ fontSize: "14px", color: "#444" }}>
+      <span style={{ fontSize: "14px", color: "var(--text-body)" }}>
         {String(props.content ?? "")}
       </span>
     ),
@@ -48,7 +48,7 @@ export const { registry, handlers } = defineRegistry(catalog, {
         style={{
           padding: "8px 16px",
           fontSize: "14px",
-          backgroundColor: "#4f46e5",
+          backgroundColor: "var(--accent)",
           color: "#fff",
           border: "none",
           borderRadius: "6px",
@@ -60,19 +60,25 @@ export const { registry, handlers } = defineRegistry(catalog, {
       </button>
     ),
 
-    Input: ({ props, emit }) => (
-      <input
-        placeholder={props.placeholder ?? ""}
-        onChange={() => emit("change")}
-        style={{
-          padding: "8px 12px",
-          fontSize: "14px",
-          border: "1px solid #d0d0d0",
-          borderRadius: "6px",
-          outline: "none",
-        }}
-      />
-    ),
+    Input: ({ props, bindings }) => {
+      const [value, setValue] = useBoundProp<string>(props.value, bindings?.value);
+      return (
+        <input
+          placeholder={props.placeholder ?? ""}
+          value={value ?? ""}
+          onChange={(e) => setValue(e.target.value)}
+          style={{
+            padding: "8px 12px",
+            fontSize: "14px",
+            border: "1px solid var(--border)",
+            borderRadius: "6px",
+            outline: "none",
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text)",
+          }}
+        />
+      );
+    },
   },
 
   actions: {

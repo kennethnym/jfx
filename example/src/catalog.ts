@@ -34,8 +34,9 @@ export const catalog = defineCatalog(schema, {
     Input: {
       props: z.object({
         placeholder: z.string().nullable(),
+        value: z.string().nullable(),
       }),
-      description: "Text input field",
+      description: "Text input field. Use { $bindState } on value for two-way binding.",
     },
   },
   actions: {
