@@ -4,7 +4,7 @@ export default defineConfig({
   entry: ["src/index.ts", "src/jsx-runtime.ts", "src/jsx-dev-runtime.ts"],
   format: ["cjs", "esm"],
   dts: true,
-  sourcemap: true,
+  sourcemap: false,
   clean: true,
   splitting: false,
   jsx: "transform",
