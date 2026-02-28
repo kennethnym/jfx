@@ -6,6 +6,7 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   clean: true,
+  splitting: false,
   jsx: "transform",
   jsxFactory: "jsx",
   jsxFragment: "Fragment",
