@@ -6,6 +6,10 @@
     "access": "public"
   },
   "description": "JSX factory for json-render. Write JSX, get Spec JSON.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kennethnym/jrx"
+  },
   "type": "module",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
