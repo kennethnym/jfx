@@ -21,6 +21,6 @@ jobs:
 
       - run: bun test
 
-      - run: bun publish --access public --provenance
+      - run: bunx npm publish --provenance --access public
         env:
           NPM_CONFIG_REGISTRY: https://registry.npmjs.org
